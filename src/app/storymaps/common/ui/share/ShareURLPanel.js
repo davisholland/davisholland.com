@@ -49,7 +49,7 @@ define([
 
     function buildShortLink(url) {
       _linkField.val(url);
-      container.find('.btn-bitlylink-open').attr('href', url + '&preview');
+      container.find('.btn-bitlylink-open').attr('href', url);
 
       SocialSharing.requestShortUrl(url).then(function(shortURL) {
         container.find('.share-btn').data('clipboardText', shortURL);

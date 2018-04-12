@@ -1,7 +1,7 @@
 (function() {
-  module.exports = function(grunt) {  // eslint-disable-line no-undef
+  module.exports = function(grunt) { // eslint-disable-line no-undef
     var fs = require('fs'),
-        TPL_NAME = 'tpl';
+      TPL_NAME = 'tpl';
 
     /*
      * Tasks:
@@ -95,7 +95,7 @@
           onBuildWrite: function(moduleName, path, content) {
             // replace handlebars with the runtime version
             if (moduleName === 'Handlebars') {
-              path = path.replace('handlebars.js','handlebars.runtime.js');
+              path = path.replace('handlebars.js', 'handlebars.runtime.js');
               content = fs.readFileSync(path).toString();
               content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
             }
@@ -111,7 +111,7 @@
             out: 'deploy/app/builder-min.js',
             onModuleBundleComplete: function(data) {
               var modules = data.included.filter(function(value) {
-                return ! value.match(/lib-/);
+                return !value.match(/lib-/);
               });
 
               fs.writeFile('deploy/build-api-builder.tmp', modules.join('\n'), function(err) {
@@ -128,7 +128,7 @@
             out: 'deploy/app/viewer-min.js',
             onModuleBundleComplete: function(data) {
               var modules = data.included.filter(function(value) {
-                return ! value.match(/lib-/);
+                return !value.match(/lib-/);
               });
 
               fs.writeFile('deploy/build-api-viewer.tmp', modules.join('\n'), function(err) {
@@ -144,11 +144,11 @@
       concat: {
         options: {
           stripBanners: true,
-          banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - '
-              + '<%= grunt.template.today("yyyy-mm-dd, hh:MM:ss TT") %> - '
-              + 'Copyright \u00A9 2016, 2017 Esri \n'
-              + 'This application is released under the Apache License V2.0 by Esri http://www.esri.com/ - '
-              + 'https://github.com/Esri/story-map-cascade */'
+          banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+            '<%= grunt.template.today("yyyy-mm-dd, hh:MM:ss TT") %> - ' +
+            'Copyright \u00A9 2016, 2017 Esri \n' +
+            'This application is released under the Apache License V2.0 by Esri http://www.esri.com/ - ' +
+            'https://github.com/Esri/story-map-cascade */'
         },
         viewerJS: {
           src: ['deploy/app/viewer-min.js'],
@@ -244,32 +244,32 @@
           }]
         },
         libsResources: {
-          files: [
-            {
+          files: [{
               expand: true,
               cwd: 'src/lib/font-awesome/fonts/',
               src: ['**'],
               dest: 'deploy/resources/lib/font-awesome/fonts/'
-            }/*,
+            }
+            /*,
 
-            {
-              expand: true,
-              cwd: 'src/lib-app/bootstrap/fonts/',
-              src: ['**'],
-              dest: 'deploy/resources/lib/bootstrap/fonts/'
-            },
-            {
-              expand: true,
-              cwd: 'src/lib-app/colorbox/',
-              src: ['colorbox.css', 'images/**'],
-              dest: 'deploy/resources/lib/colorbox/'
-            },
-            {
-              expand: true,
-              cwd: 'src/lib/zero-clipboard/dist',
-              src: ['ZeroClipboard.swf'],
-              dest: 'deploy/resources/lib/zero-clipboard/'
-            }*/
+                        {
+                          expand: true,
+                          cwd: 'src/lib-app/bootstrap/fonts/',
+                          src: ['**'],
+                          dest: 'deploy/resources/lib/bootstrap/fonts/'
+                        },
+                        {
+                          expand: true,
+                          cwd: 'src/lib-app/colorbox/',
+                          src: ['colorbox.css', 'images/**'],
+                          dest: 'deploy/resources/lib/colorbox/'
+                        },
+                        {
+                          expand: true,
+                          cwd: 'src/lib/zero-clipboard/dist',
+                          src: ['ZeroClipboard.swf'],
+                          dest: 'deploy/resources/lib/zero-clipboard/'
+                        }*/
           ]
         },
         jsapioptim: {
@@ -355,29 +355,29 @@
           options: {
             process: function(content) {
               return content.replace(/\$/g, '@') // change sass $ vars to less @ vars
-                      .replace(/ !default/g, '') // get rid of sass !default
-                      .replace(/Calcite-Highlight-Blue-350/, 'Calcite_Highlight_Blue_350') // fix calcite vars
-                      .replace(/Calcite_Highlight-Blue/, 'Calcite_Highlight_Blue') // more calcite :(
-                      // replace fade-in or fade_in(color, 0-1) with fade(color, 0-100%)
-                      .replace(/(fade-in\(|fade_in\().+?\.[0-9]+\s*\)/g, function(fadeStr) {
-                        // find the 0-1 decimal at the end of the fade_in function
-                        var decimal = fadeStr.slice(fadeStr.lastIndexOf('.'), fadeStr.lastIndexOf(')'));
-                        var percent = Math.round(parseFloat(decimal) * 100) + '%';
-                        return 'fadein' + fadeStr.slice(fadeStr.indexOf('('), fadeStr.indexOf(',') + 1) + ' ' + percent + ')';
-                      })
-                      // replace rgba(#hex, 0-1) with fade(#hex, 0-100%)
-                      .replace(/rgba\(#(?:[0-9a-fA-F]{3}){1,2},\s*0*\.[0-9]+\s*\)/g, function(rgbaStr) {
-                        var decimal = rgbaStr.slice(rgbaStr.lastIndexOf('.'), rgbaStr.lastIndexOf(')'));
-                        var percent = Math.round(parseFloat(decimal) * 100) + '%';
-                        return 'fade' + rgbaStr.slice(rgbaStr.indexOf('('), rgbaStr.indexOf(',') + 1) + ' ' + percent + ')';
-                      });
+                .replace(/ !default/g, '') // get rid of sass !default
+                .replace(/Calcite-Highlight-Blue-350/, 'Calcite_Highlight_Blue_350') // fix calcite vars
+                .replace(/Calcite_Highlight-Blue/, 'Calcite_Highlight_Blue') // more calcite :(
+                // replace fade-in or fade_in(color, 0-1) with fade(color, 0-100%)
+                .replace(/(fade-in\(|fade_in\().+?\.[0-9]+\s*\)/g, function(fadeStr) {
+                  // find the 0-1 decimal at the end of the fade_in function
+                  var decimal = fadeStr.slice(fadeStr.lastIndexOf('.'), fadeStr.lastIndexOf(')'));
+                  var percent = Math.round(parseFloat(decimal) * 100) + '%';
+                  return 'fadein' + fadeStr.slice(fadeStr.indexOf('('), fadeStr.indexOf(',') + 1) + ' ' + percent + ')';
+                })
+                // replace rgba(#hex, 0-1) with fade(#hex, 0-100%)
+                .replace(/rgba\(#(?:[0-9a-fA-F]{3}){1,2},\s*0*\.[0-9]+\s*\)/g, function(rgbaStr) {
+                  var decimal = rgbaStr.slice(rgbaStr.lastIndexOf('.'), rgbaStr.lastIndexOf(')'));
+                  var percent = Math.round(parseFloat(decimal) * 100) + '%';
+                  return 'fade' + rgbaStr.slice(rgbaStr.indexOf('('), rgbaStr.indexOf(',') + 1) + ' ' + percent + ')';
+                });
             }
           },
           files: [{
             expand: true,
             cwd: 'src/lib/calcite-bootstrap/sass/calcite/',
             src: ['_variables.scss',
-                  '_colors-default.scss'
+              '_colors-default.scss'
             ],
             dest: 'src/app/storymaps/common/_resources/styles/calcite/',
             rename: function(dest, src) {
@@ -394,8 +394,7 @@
       'regex-replace': {
         css: {
           src: ['deploy/app/*.css'],
-          actions: [
-            {
+          actions: [{
               name: 'Common resources path',
               search: '([\.a-zA-Z0-9]+/)*common/_resources/',
               replace: '../resources/common/',
@@ -430,8 +429,7 @@
         },
         js: {
           src: ['deploy/app/*.js'],
-          actions: [
-            {
+          actions: [{
               name: 'JS isProduction flag',
               search: 'TPL_ENV_DEV',
               replace: 'TPL_ENV_PRODUCTION'
@@ -445,13 +443,11 @@
         },
         main: {
           src: ['deploy/app/main-config.js'],
-          actions: [
-            {
-              name: 'Index.html isProduction flag',
-              search: 'app.isProduction = false',
-              replace: 'app.isProduction = true'
-            }
-          ]
+          actions: [{
+            name: 'Index.html isProduction flag',
+            search: 'app.isProduction = false',
+            replace: 'app.isProduction = true'
+          }]
         }
       },
 
@@ -492,7 +488,7 @@
       watch: {
         jsx: {
           files: ['src/app/**/*.jsx', 'src/app/storymaps/issue-checker/**/*.js'],
-          tasks: [/*'eslint',*/ 'newer:babel'],
+          tasks: [ /*'eslint',*/ 'newer:babel'],
           options: {
             livereload: true
           }
@@ -513,7 +509,7 @@
         },
         others: {
           files: ['src/app/**/*.js', 'src/app/**/*.css', 'src/app/**/*.html', '!src/app/storymaps/common/_resources/**/*.js'],
-          tasks: [/*'eslint'*/],
+          tasks: [ /*'eslint'*/ ],
           options: {
             livereload: true
           }
@@ -555,8 +551,7 @@
           sourceMaps: true
         },
         dev: {
-          files: [
-            {
+          files: [{
               expand: true,
               cwd: 'src/',
               src: ['app/storymaps/**/*.jsx'],

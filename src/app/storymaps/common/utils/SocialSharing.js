@@ -15,10 +15,11 @@ define([
         'toolbar=0,status=0,width=626,height=436'
       );
     },
-    shareTwitter: function(title, url) {
+    shareTwitter: function(title, username, url) {
       var options = 'text=' + encodeURIComponent(title || '')
+              + encodeURIComponent(username || '')
               + '&url=' + this.cleanURL(url || document.location.href)
-              + '&related=EsriStoryMaps'
+              + '&related=adavisholland'
               + '&hashtags=StoryMaps';
 
       window.open(

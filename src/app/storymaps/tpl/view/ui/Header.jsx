@@ -217,7 +217,7 @@ export default class Header {
 
   _onShareBtnClick() {
     this._shareDialog.present(SocialSharing.cleanURL(document.location.href, true), {
-      facebook: true,
+      facebook: false,
       twitter: true
     });
   }

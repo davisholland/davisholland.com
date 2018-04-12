@@ -39,7 +39,7 @@ define([
     this.present = function(url, socialOptions) {
       socialOptions = socialOptions || {
         facebook: false,
-        twitter: false
+        twitter: true
       };
 
       container.find('.social-container').toggle(socialOptions.facebook || socialOptions.twitter);
@@ -123,8 +123,11 @@ define([
     }
 
     function shareTwitter(url) {
-      var appTitle = $('<div>' + app.data.title + '</div>').text();
-      SocialSharing.shareTwitter(appTitle, url);
+      var appTitle = $('<div>Explore ' + app.data.title + '\'s Portfolio</div>').text();
+      //var earthEmoji = $('<div>🌎</div>').text();
+      //var handle = $('<div> @' + username + '</div>').text();
+      var handle = $('<div> @adavisholland</div>').text();
+      SocialSharing.shareTwitter(appTitle, handle, url);
     }
   };
 });

@@ -1,6 +1,7 @@
 deploy/
 build/
 node_modules/
+package-lock.json
 
 # Needed for CI
 src/lib/
